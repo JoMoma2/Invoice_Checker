@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF OCR</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="instruction-modal" class="modal">
+        <div class="modal-content">
+            <h1 class="important">IMPORTANT</h1>
+            <h2 class="stop-to-read">STOP TO READ</h2>
+            <p>This webpage allows you to extract specific data from PDF documents and save it into a CSV file. Please follow these instructions carefully:</p>
+            <p><strong>1. Selecting the PDF:</strong></p>
+            <p>Click on the "Choose File" button at the top of the page. Select a PDF file from your device. The first page of the PDF will be displayed.</p>
+            <p><strong>2. Navigating Through the PDF:</strong></p>
+            <p>Use the "ArrowRight" key to go to the next page. Use the "ArrowLeft" key to go back to the previous page. If you reach the last page and try to go forward, an alert will notify you with "No more pages".</p>
+            <p><strong>3. Selecting Areas:</strong></p>
+            <p>To select an area, click and hold the mouse button to set the first corner. Drag the mouse to draw a box over the area you want to collect. Release the mouse button to finalize the selection.</p>
+            <p>If you accidentally release the mouse button without dragging it far enough (less than 10 pixels), the box will not be finalized. The selection box will follow your cursor, and the next click will set the end coordinates.</p>
+            <p><strong>Important:</strong> Please first select the total amount in the PDF. Then, select the invoice number in the PDF. <span class="important-order">It is extremely important to select these areas in this order.</span></p>
+            <p><strong>4. Saving the CSV:</strong></p>
+            <p>Once you have finished selecting areas and are ready to save your data, click on the "Save CSV" button. A CSV file containing your collected data will be generated and downloaded to your device.</p>
+            <button id="close-instructions">Got it!</button>
+        </div>
+    </div>
+    <div id="button-container">
+        <input type="file" id="file-input" accept="application/pdf" />
+        <button id="save-csv-button" onclick="saveResults()">Save CSV</button>
+    </div>
+    <div id="pdf-container">
+        <canvas id="pdf-canvas" tabindex="0"></canvas>
+        <button id="prev-page" onclick="prevPage()">&#9664;</button>
+        <button id="next-page" onclick="nextPage()">&#9654;</button>
+    </div>
+    <div id="loading-spinner" class="spinner"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <script>
+        // Set the workerSrc property
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.1.1/dist/tesseract.min.js"></script>
+    <script src="pdf_displayer.js"></script>
+    <script src="info_selector.js"></script>
+    <script src="ocr.js"></script>
+    <script src="instructions.js"></script>
+</body>
+</html>
